@@ -1,122 +1,121 @@
 package com.opus.graphql.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Map;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import graphql.schema.DataFetcher;
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.schema.DataFetchingEnvironment;
 
 @Entity
+@GraphQLName("Book")
 public class Book {
-    @Id
-    private Long id;
+	@Id
+	@GraphQLField
+	private Long id;
 
-    private String title;
+	@GraphQLField
+	private String title;
 
-    private String isbn;
+	@GraphQLField
+	private String isbn;
 
-    private int pageCount;
-    
-    private Date createdDate;
+	@GraphQLField
+	private int pageCount;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id",
-            nullable = false, updatable = false)
-    private Author author;
+	@GraphQLField
+	private Date createdDate;
 
-    public Book() {
-    }
+	@ManyToOne
+	@JoinColumn(name = "author_id", nullable = false, updatable = false)
+	private Author author;
 
-    public Book(Long id,String title, String isbn, int pageCount, Author author, Date createdDate) {
-    	this.id = id;
-        this.title = title;
-        this.isbn = isbn;
-        this.pageCount = pageCount;
-        this.author = author;
-        this.createdDate = createdDate;
-    }
+	public Book() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Book(Long id, String title, String isbn, int pageCount, Author author, Date createdDate) {
+		this.id = id;
+		this.title = title;
+		this.isbn = isbn;
+		this.pageCount = pageCount;
+		this.author = author;
+		this.createdDate = createdDate;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    public String getIsbn(DataFetchingEnvironment environment) {
-    	String data = environment.getArgument("data");
-    	System.out.println("--->"+data);
-    	if(data != null)
-    		return isbn.concat("DATA");
-    	else 
-    		return isbn;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public int getPageCount() {
-        return pageCount;
-    }
+	public String getIsbn(DataFetchingEnvironment environment) {
+		Map args = environment.getArguments();
+		String data = String.valueOf(args.get("data"));
+//		String data = args.getArgument("data");
+		System.out.println("--->" + data);
+		if (data != null)
+			return isbn.concat("DATA");
+		else
+			return isbn;
+	}
 
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
-    }
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
 
-    public Author getAuthor() {
-        return author;
-    }
+	public int getPageCount() {
+		return pageCount;
+	}
 
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public Author getAuthor() {
+		return author;
+	}
 
-        Book book = (Book) o;
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
 
-        return id.equals(book.id);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+		Book book = (Book) o;
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", pageCount=" + pageCount +
-                ", author=" + author +
-                '}';
-    }
+		return id.equals(book.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "Book{" + "id=" + id + ", title='" + title + '\'' + ", isbn='" + isbn + '\'' + ", pageCount=" + pageCount
+				+ ", author=" + author + '}';
+	}
 
 	public Date getCreatedDate() {
 		return createdDate;
@@ -125,17 +124,17 @@ public class Book {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-    
-//	public Date getCreatedDate(DataFetchingEnvironment environment) {
-//        String dateFormat = environment.getArgument("dateFormat");
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
-////        return simpleDateFormat.format(createdDate);
-//        try{
-//			return simpleDateFormat.parse(simpleDateFormat.format(createdDate));
-//		} catch (ParseException e){
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return createdDate;
-//    }
+
+	// public Date getCreatedDate(DataFetchingEnvironment environment) {
+	// String dateFormat = environment.getArgument("dateFormat");
+	// SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+	//// return simpleDateFormat.format(createdDate);
+	// try{
+	// return simpleDateFormat.parse(simpleDateFormat.format(createdDate));
+	// } catch (ParseException e){
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// return createdDate;
+	// }
 }

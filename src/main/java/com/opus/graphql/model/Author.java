@@ -4,14 +4,20 @@ import javax.persistence.Entity;
 
 import org.springframework.data.annotation.Id;
 
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
+
 @Entity
+@GraphQLName("Author")
 public class Author {
 	@Id
-	// @GeneratedValue(strategy=GenerationType.AUTO)
+	@GraphQLField
 	private Long id;
 
+	@GraphQLField
 	private String firstName;
 
+	@GraphQLField
 	private String lastName;
 
 	public Author() {

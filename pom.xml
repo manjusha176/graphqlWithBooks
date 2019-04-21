@@ -49,5 +49,11 @@
 			<artifactId>graphql-java-extended-scalars</artifactId>
 			<version>1.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.github.graphql-java</groupId>
+			<artifactId>graphql-java-annotations</artifactId>
+			<version>6.2</version>
+		</dependency>
 	</dependencies>
 </project>
