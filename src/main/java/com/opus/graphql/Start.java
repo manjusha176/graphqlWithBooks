@@ -15,7 +15,6 @@ import com.opus.graphql.repo.BookRepository;
 public class Start {
 
 	public static void main(String[] args) {
-		// RuntimeWiring.newRuntimeWiring().scalar(ExtendedScalars.DateTime);
 		SpringApplication.run(Start.class, args);
 	}
 

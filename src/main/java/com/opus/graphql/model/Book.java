@@ -1,7 +1,6 @@
 package com.opus.graphql.model;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +12,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.schema.DataFetchingEnvironment;
 
 @Entity
-@GraphQLName("Book")
+@GraphQLName ("Book")
 public class Book {
 	@Id
 	@GraphQLField
@@ -32,7 +31,8 @@ public class Book {
 	private Date createdDate;
 
 	@ManyToOne
-	@JoinColumn(name = "author_id", nullable = false, updatable = false)
+	@JoinColumn (name = "author_id", nullable = false, updatable = false)
+	@GraphQLField
 	private Author author;
 
 	public Book() {
@@ -63,15 +63,20 @@ public class Book {
 		this.title = title;
 	}
 
-	public String getIsbn(DataFetchingEnvironment environment) {
-		Map args = environment.getArguments();
-		String data = String.valueOf(args.get("data"));
-//		String data = args.getArgument("data");
-		System.out.println("--->" + data);
-		if (data != null)
-			return isbn.concat("DATA");
-		else
-			return isbn;
+	public String getIsbn() {
+		System.out.println("simple");
+		return isbn;
+	}
+
+	public String getIsbn(DataFetchingEnvironment env) {
+		System.out.println("args");
+		// Map args = environment.getArguments();
+		// String data = String.valueOf(args.get("data"));
+		// System.out.println("--->" + data);
+		// if (data != null)
+		return isbn.concat("DATA");
+		// else
+		// return isbn;
 	}
 
 	public void setIsbn(String isbn) {
@@ -96,10 +101,8 @@ public class Book {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		Book book = (Book) o;
 
@@ -113,8 +116,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book{" + "id=" + id + ", title='" + title + '\'' + ", isbn='" + isbn + '\'' + ", pageCount=" + pageCount
-				+ ", author=" + author + '}';
+		return "Book{" + "id=" + id + ", title='" + title + '\'' + ", isbn='" + isbn + '\'' + ", pageCount=" + pageCount + ", author=" + author + '}';
 	}
 
 	public Date getCreatedDate() {

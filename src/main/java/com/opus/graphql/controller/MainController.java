@@ -15,20 +15,21 @@ import graphql.GraphQL;
 
 @RestController
 public class MainController {
-	
-	private GraphQL graphQL;
-    private GraphQlUtility graphQlUtility;
-    @Autowired
-    MainController(GraphQlUtility graphQlUtility) throws IOException {
-        this.graphQlUtility = graphQlUtility;
-        graphQL = graphQlUtility.createGraphQlObject();
-    }
 
-    @PostMapping(value = "/query")
-    public ResponseEntity query(@RequestBody String query){
-        ExecutionResult result = graphQL.execute(query);
-        System.out.println("errors: "+result.getErrors());
-        return ResponseEntity.ok(result.getData());
-    }
+	private GraphQL graphQL;
+	private GraphQlUtility graphQlUtility;
+
+	@Autowired
+	MainController(GraphQlUtility graphQlUtility) throws IOException {
+		this.graphQlUtility = graphQlUtility;
+		graphQL = graphQlUtility.createGraphQlObject();
+	}
+
+	@PostMapping (value = "/query")
+	public ResponseEntity query(@RequestBody String query) {
+		ExecutionResult result = graphQL.execute(query);
+		System.out.println("errors: " + result.getErrors());
+		return ResponseEntity.ok(result.getData());
+	}
 
 }

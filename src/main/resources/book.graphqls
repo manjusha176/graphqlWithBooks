@@ -2,7 +2,7 @@
 type Book {
     id: ID!
     title: String!
-    isbn(data : String): String
+    isbn(data : String = "data"): String
     pageCount: Int
     author: Author
     createdDate: String
