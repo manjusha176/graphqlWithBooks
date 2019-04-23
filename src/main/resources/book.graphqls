@@ -21,3 +21,8 @@ type Query {
     findById(id: ID!) : Book
     findByDate(createdDate: String!) : [Book]!
 }
+type Mutation {
+    newBook(title: String!, isbn: String!, pageCount: Int, author: ID!) : Book!
+    deleteBook(id: ID!) : Boolean
+    updateBookPageCount(pageCount: Int!, id: ID!) : Book!
+}
