@@ -7,8 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.opus.graphql.directive.UpperWiring;
+
+import graphql.annotations.annotationTypes.GraphQLDirectives;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
+import graphql.annotations.directives.Directive;
 import graphql.schema.DataFetchingEnvironment;
 
 @Entity
@@ -19,6 +23,7 @@ public class Book {
 	private Long id;
 
 	@GraphQLField
+	@GraphQLDirectives(@Directive(name = "upperCase", wiringClass = UpperWiring.class, argumentsValues = {"true"}))
 	private String title;
 
 	@GraphQLField

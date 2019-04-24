@@ -1,6 +1,7 @@
 package com.opus.graphql;
 
 import java.util.Date;
+import static graphql.schema.GraphQLSchema.newSchema;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,14 +11,25 @@ import org.springframework.context.annotation.Bean;
 import com.opus.graphql.model.Author;
 import com.opus.graphql.model.Book;
 import com.opus.graphql.repo.BookRepository;
+import com.opus.graphql.resolver.Query;
+
+import graphql.GraphQL;
+import graphql.annotations.processor.GraphQLAnnotations;
+import graphql.annotations.processor.retrievers.GraphQLObjectHandler;
+import graphql.schema.GraphQLObjectType;
 
 @SpringBootApplication
 public class Start {
 
 	public static void main(String[] args) {
+//		GraphQLAnnotations.getInstance().getTypeRegistry().clear();
 		SpringApplication.run(Start.class, args);
 	}
 
+//	@Bean
+//	public Query query(BookRepository bookRepository) {
+//		return new Query(bookRepository);
+//	}
 	@Bean
 	public CommandLineRunner demo(BookRepository bookRepository) {
 		return (args) -> {

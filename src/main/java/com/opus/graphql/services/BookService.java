@@ -16,4 +16,6 @@ public interface BookService {
 	List<Book> findAllBooksWithSorting(String sortOrder, String sortBy);
 
 	List<Book> findByDate(Date createdDate);
+	
+	Book saveBook(Book book);
 }

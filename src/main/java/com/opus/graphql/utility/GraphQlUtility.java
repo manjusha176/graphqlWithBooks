@@ -15,11 +15,17 @@ import org.springframework.stereotype.Component;
 
 import com.opus.graphql.datafetchers.AllBooksDataFetcher;
 import com.opus.graphql.datafetchers.BookDataFetcher;
+import com.opus.graphql.directive.UpperDirective;
+import com.opus.graphql.resolver.Query;
+import com.opus.graphql.services.BookService;
 import com.opus.graphql.services.impl.BookServiceImpl;
 
 import graphql.GraphQL;
 import graphql.annotations.processor.GraphQLAnnotations;
+import graphql.annotations.processor.retrievers.GraphQLObjectHandler;
 import graphql.scalars.ExtendedScalars;
+import graphql.schema.DataFetcher;
+import graphql.schema.GraphQLDirective;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
@@ -39,19 +45,30 @@ public class GraphQlUtility {
 	private AllBooksDataFetcher allBooksDataFetcher;
 	@Autowired
 	private BookDataFetcher bookDataFetcher;
+	@Autowired
+	private Query query;
+	
+	@Autowired
+    DataFetcherFactory dataFetcherFactory;
 
 	@PostConstruct
 	public GraphQL createGraphQlObject() throws IOException {
-		 File schemas = schemaResource.getFile();
-		 TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemas);
-		 RuntimeWiring wiring = buildRuntimeWiring();
-		 GraphQLSchema schema = new
-		 SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
-		 return newGraphQL(schema).build();
+		SpringAutoWireHelper.setDataFetcherFactory(dataFetcherFactory);
+//		 File schemas = schemaResource.getFile();
+//		 TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemas);
+//		 RuntimeWiring wiring = buildRuntimeWiring();
+//		 GraphQLSchema schema = new
+//		 SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
+//		 return newGraphQL(schema).build();
 
-//		GraphQLObjectType object = GraphQLAnnotations.object(BookServiceImpl.class);
-//		GraphQLSchema schema = newSchema().query(object).build();
-//		return GraphQL.newGraphQL(schema).build();
+//		GraphQLAnnotations graphQLAnnotations = new GraphQLAnnotations();
+//        GraphQLObjectHandler graphQLObjectHandler = graphQLAnnotations.getObjectHandler();
+//        GraphQLObjectType queryObject = graphQLObjectHandler.getObject(Query.class,graphQLAnnotations.getContainer());
+//        return GraphQL.newGraphQL(newSchema().query(queryObject).build()).build();
+		GraphQLDirective upperCase = GraphQLAnnotations.directive(UpperDirective.class);
+		GraphQLObjectType object = GraphQLAnnotations.object(BookServiceImpl.class, upperCase);
+		GraphQLSchema schema = newSchema().query(object).build();
+		return GraphQL.newGraphQL(schema).build();
 	}
 
 	public RuntimeWiring buildRuntimeWiring() {
