@@ -32,6 +32,8 @@ public class AllBooksDataFetcher implements DataFetcher<List<Book>> {
 			return bookService.findAllBooksWithSorting(String.valueOf(args.get("order")), String.valueOf(args.get("sortBy")));
 		} else if (args.containsKey("createdDate")){
 			return bookService.findByDate(new Date());
+		} else if (args.containsKey("where")){
+			return bookService.findAllBooks((Map<String, Object>) args.get("where"));
 		}
 		return bookService.findAllBooks();
 	}

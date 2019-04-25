@@ -2,12 +2,15 @@ package com.opus.graphql.services.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.introspector.PropertyUtils;
 
 import com.opus.graphql.datafetchers.AllBooksDataFetcher;
 import com.opus.graphql.datafetchers.BookDataFetcher;
@@ -57,7 +60,7 @@ public class BookServiceImpl implements BookService{
 	@Override
 	@GraphQLField
 	@GraphQLDataFetcher(value = GenericDataFetcher.class, args = {"AllBookDataFetcher"})
-	public List<Book> findByDate(Date createdDate) {
+	public List<Book> findByDate(@NotNull @GraphQLName("createdDate") Date createdDate) {
 		return bookRepository.findByDate(createdDate);
 	}
 
@@ -67,6 +70,22 @@ public class BookServiceImpl implements BookService{
 	public Book saveBook(@NotNull @GraphQLName("book") Book book) {
 		bookRepository.save(book);
 		return bookRepository.findById(book.getId()).get();
+	}
+	
+	@Override
+	@GraphQLField
+	@GraphQLDataFetcher(value = GenericDataFetcher.class, args = {"AllBookDataFetcher"})
+	public List<Book> findAllBooks(@NotNull @GraphQLName("where") Map<String, Object> where){
+//		ExampleMatcher matcher = ExampleMatcher.matching();
+//	    Book book = new Book();
+//	    for (String key : where.keySet()) {
+//	            matcher.withMatcher(key, ignoreCase());
+//	            PropertyUtils.setSimpleProperty(book, key, where.get(key));
+//	    }
+//
+//	    Example<User> example = Example.of(user, matcher);
+//	    return userRepository.findAll(example);
+		return bookRepository.findAll();
 	}
 
 }

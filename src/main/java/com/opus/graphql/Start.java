@@ -1,6 +1,9 @@
 package com.opus.graphql;
 
 import java.util.Date;
+
+import javax.annotation.PostConstruct;
+
 import static graphql.schema.GraphQLSchema.newSchema;
 
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.opus.graphql.model.Author;
 import com.opus.graphql.model.Book;
+import com.opus.graphql.model.Category;
 import com.opus.graphql.repo.BookRepository;
 import com.opus.graphql.resolver.Query;
 
@@ -36,11 +40,11 @@ public class Start {
 			// 1st doc
 			Author author = new Author((long) 20, "Herbert", "Schildt");
 			bookRepository.save(new Book((long) 11, "Java: A Beginner's Guide, Sixth Edition", "0071809252", 728,
-					author, new Date()));
+					author, new Date(),Category.GENERAL));
 
 			// 2nd doc
 			Author author1 = new Author((long) 21, "Manjusha", "Dhamdhere");
-			bookRepository.save(new Book((long) 12, "GraphQL", "007172", 720, author1, new Date()));
+			bookRepository.save(new Book((long) 12, "GraphQL", "007172", 720, author1, new Date(),Category.GENERAL));
 		};
 	}
 

@@ -38,9 +38,9 @@ import static graphql.GraphQL.newGraphQL;
 @Component
 public class GraphQlUtility {
 
-	 @Value("classpath:book.graphqls")
-	 private Resource schemaResource;
-	 private GraphQL graphQL;
+//	 @Value("classpath:book.graphqls")
+//	 private Resource schemaResource;
+//	 private GraphQL graphQL;
 	@Autowired
 	private AllBooksDataFetcher allBooksDataFetcher;
 	@Autowired
@@ -53,7 +53,7 @@ public class GraphQlUtility {
 
 	@PostConstruct
 	public GraphQL createGraphQlObject() throws IOException {
-		SpringAutoWireHelper.setDataFetcherFactory(dataFetcherFactory);
+	
 //		 File schemas = schemaResource.getFile();
 //		 TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemas);
 //		 RuntimeWiring wiring = buildRuntimeWiring();
@@ -61,11 +61,11 @@ public class GraphQlUtility {
 //		 SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
 //		 return newGraphQL(schema).build();
 
-//		GraphQLAnnotations graphQLAnnotations = new GraphQLAnnotations();
-//        GraphQLObjectHandler graphQLObjectHandler = graphQLAnnotations.getObjectHandler();
-//        GraphQLObjectType queryObject = graphQLObjectHandler.getObject(Query.class,graphQLAnnotations.getContainer());
-//        return GraphQL.newGraphQL(newSchema().query(queryObject).build()).build();
+		
+		SpringAutoWireHelper.setDataFetcherFactory(dataFetcherFactory);
+		
 		GraphQLDirective upperCase = GraphQLAnnotations.directive(UpperDirective.class);
+		
 		GraphQLObjectType object = GraphQLAnnotations.object(BookServiceImpl.class, upperCase);
 		GraphQLSchema schema = newSchema().query(object).build();
 		return GraphQL.newGraphQL(schema).build();

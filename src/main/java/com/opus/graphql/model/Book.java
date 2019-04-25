@@ -34,6 +34,9 @@ public class Book {
 
 	@GraphQLField
 	private Date createdDate;
+	
+	@GraphQLField
+	private Category cat;
 
 	@ManyToOne
 	@JoinColumn (name = "author_id", nullable = false, updatable = false)
@@ -43,13 +46,14 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(Long id, String title, String isbn, int pageCount, Author author, Date createdDate) {
+	public Book(Long id, String title, String isbn, int pageCount, Author author, Date createdDate, Category cat) {
 		this.id = id;
 		this.title = title;
 		this.isbn = isbn;
 		this.pageCount = pageCount;
 		this.author = author;
 		this.createdDate = createdDate;
+		this.cat = cat;
 	}
 
 	public Long getId() {
