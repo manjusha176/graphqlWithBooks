@@ -21,4 +21,6 @@ public interface BookService {
 	Book saveBook(Book book);
 
 	List<Book> findAllBooks(Map<String, Object> where);
+
+	List<Book> loadBookById(List<Long> bookIds);
 }
