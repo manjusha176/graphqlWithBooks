@@ -38,9 +38,9 @@ import static graphql.GraphQL.newGraphQL;
 @Component
 public class GraphQlUtility {
 
-//	 @Value("classpath:book.graphqls")
-//	 private Resource schemaResource;
-//	 private GraphQL graphQL;
+	 @Value("classpath:book.graphqls")
+	 private Resource schemaResource;
+	 private GraphQL graphQL;
 	@Autowired
 	private AllBooksDataFetcher allBooksDataFetcher;
 	@Autowired
@@ -54,38 +54,38 @@ public class GraphQlUtility {
 	@PostConstruct
 	public GraphQL createGraphQlObject() throws IOException {
 	
-//		 File schemas = schemaResource.getFile();
-//		 TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemas);
-//		 RuntimeWiring wiring = buildRuntimeWiring();
-//		 GraphQLSchema schema = new
-//		 SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
-//		 return newGraphQL(schema).build();
+		 File schemas = schemaResource.getFile();
+		 TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemas);
+		 RuntimeWiring wiring = buildRuntimeWiring();
+		 GraphQLSchema schema = new
+		 SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
+		 return newGraphQL(schema).build();
 
 		
-		SpringAutoWireHelper.setDataFetcherFactory(dataFetcherFactory);
-		
-		GraphQLDirective upperCase = GraphQLAnnotations.directive(UpperDirective.class);
-		
-		GraphQLObjectType object = GraphQLAnnotations.object(BookServiceImpl.class, upperCase);
-		GraphQLSchema schema = newSchema().query(object).build();
-		return GraphQL.newGraphQL(schema).build();
+//		SpringAutoWireHelper.setDataFetcherFactory(dataFetcherFactory);
+//		
+//		GraphQLDirective upperCase = GraphQLAnnotations.directive(UpperDirective.class);
+//		
+//		GraphQLObjectType object = GraphQLAnnotations.object(BookServiceImpl.class, upperCase);
+//		GraphQLSchema schema = newSchema().query(object).build();
+//		return GraphQL.newGraphQL(schema).build();
 	}
 
 	public RuntimeWiring buildRuntimeWiring() {
-//		return newRuntimeWiring()
-//				.type("Query", typeWiring -> typeWiring.dataFetcher("findAllBooks", allBooksDataFetcher)
-//						.dataFetcher("findAllBooksWithSorting", allBooksDataFetcher)
-//						.dataFetcher("findByDate", allBooksDataFetcher).dataFetcher("findById", bookDataFetcher))
-//				.type("Mutation", typeWiring -> typeWiring.dataFetcher("findAllBooks", allBooksDataFetcher))
-//				.scalar(ExtendedScalars.Date).build();
-		
 		return newRuntimeWiring()
 				.type("Query", typeWiring -> typeWiring.dataFetcher("findAllBooks", allBooksDataFetcher)
 						.dataFetcher("findAllBooksWithSorting", allBooksDataFetcher)
-						.dataFetcher("findByDate", allBooksDataFetcher).dataFetcher("findById", bookDataFetcher)
-						)
-				.type("Mutation", typeWiring -> typeWiring
-						.dataFetcher("updateBookPageCount", bookDataFetcher))
+						.dataFetcher("findByDate", allBooksDataFetcher).dataFetcher("findById", bookDataFetcher))
+				.type("Mutation", typeWiring -> typeWiring.dataFetcher("findAllBooks", allBooksDataFetcher))
 				.scalar(ExtendedScalars.Date).build();
+		
+//		return newRuntimeWiring()
+//				.type("Query", typeWiring -> typeWiring.dataFetcher("findAllBooks", allBooksDataFetcher)
+//						.dataFetcher("findAllBooksWithSorting", allBooksDataFetcher)
+//						.dataFetcher("findByDate", allBooksDataFetcher).dataFetcher("findById", bookDataFetcher)
+//						)
+//				.type("Mutation", typeWiring -> typeWiring
+//						.dataFetcher("updateBookPageCount", bookDataFetcher))
+//				.scalar(ExtendedScalars.Date).build();
 	}
 }

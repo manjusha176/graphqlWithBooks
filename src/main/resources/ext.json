@@ -1,0 +1,16 @@
+{
+  "/query": {
+  	"queryName" : [
+  	{
+  	"findAllBooks" : "{ id title author{id}}"
+  	},
+  	{
+  	"findAllBooks" : "{ id title author{id}}"
+  	},
+  	{
+  	"findAllBooks" : "{ id title author{id}}"
+  	}
+  	],
+  	"default" : "{findAllBooks { id title author{id}}}"
+  }
+}

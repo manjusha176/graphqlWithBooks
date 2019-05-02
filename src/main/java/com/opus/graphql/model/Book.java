@@ -38,9 +38,9 @@ public class Book {
 	@GraphQLField
 	private Category cat;
 
-	@ManyToOne
-	@JoinColumn (name = "author_id", nullable = false, updatable = false)
-	@GraphQLField
+//	@ManyToOne
+//	@JoinColumn (name = "author_id", nullable = false, updatable = false)
+//	@GraphQLField
 	private Author author;
 
 	public Book() {
