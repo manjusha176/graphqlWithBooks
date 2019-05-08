@@ -90,6 +90,7 @@ public class BookServiceImpl implements BookService{
 
 	@Override
 	public List<Book> loadBookById(List<Long> bookIds) {
+		System.out.println("in api-->"+bookIds);
 		return (List<Book>) bookRepository.findAllById(bookIds);
 	}
 

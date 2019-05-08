@@ -20,9 +20,10 @@ public class BookBatchLoader implements BatchLoader<Long, Book> {
 	
 	@Override
 	public CompletionStage<List<Book>> load(List<Long> bookIds) {
+		System.out.println("batchloader book ids-->"+bookIds);
 		return CompletableFuture.supplyAsync(() -> {
             return bookService.loadBookById(bookIds);
         });
 	}
-
+	
 }

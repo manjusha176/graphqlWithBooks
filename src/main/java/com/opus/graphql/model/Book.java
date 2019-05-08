@@ -7,7 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.opus.graphql.directive.UpperWiring;
+import com.opus.graphql.repo.AuthorRepository;
 
 import graphql.annotations.annotationTypes.GraphQLDirectives;
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -40,7 +43,7 @@ public class Book {
 
 //	@ManyToOne
 //	@JoinColumn (name = "author_id", nullable = false, updatable = false)
-//	@GraphQLField
+	@GraphQLField
 	private Author author;
 
 	public Book() {
@@ -101,6 +104,7 @@ public class Book {
 	}
 
 	public Author getAuthor() {
+		
 		return author;
 	}
 

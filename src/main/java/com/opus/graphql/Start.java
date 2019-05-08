@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import com.opus.graphql.model.Author;
 import com.opus.graphql.model.Book;
 import com.opus.graphql.model.Category;
+import com.opus.graphql.repo.AuthorRepository;
 import com.opus.graphql.repo.BookRepository;
 import com.opus.graphql.resolver.Query;
 
@@ -35,15 +36,19 @@ public class Start {
 //		return new Query(bookRepository);
 //	}
 	@Bean
-	public CommandLineRunner demo(BookRepository bookRepository) {
+	public CommandLineRunner demo(BookRepository bookRepository, AuthorRepository authorRepo) {
 		return (args) -> {
+			
+			authorRepo.save(new Author((long)21, "manjusha", "dhamdhere"));
+			authorRepo.save(new Author((long)22, "abc", "xyz"));
+			
 			// 1st doc
-			Author author = new Author((long) 20, "Herbert", "Schildt");
+			Author author = new Author((long) 21);
 			bookRepository.save(new Book((long) 11, "Java: A Beginner's Guide, Sixth Edition", "0071809252", 728,
 					author, new Date(),Category.GENERAL));
 
 			// 2nd doc
-			Author author1 = new Author((long) 21, "Manjusha", "Dhamdhere");
+			Author author1 = new Author((long) 22);
 			bookRepository.save(new Book((long) 12, "GraphQL", "007172", 720, author1, new Date(),Category.GENERAL));
 		};
 	}
